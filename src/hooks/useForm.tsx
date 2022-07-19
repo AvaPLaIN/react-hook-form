@@ -1,4 +1,5 @@
 import set from "lodash/set";
+import unset from "lodash/unset";
 
 //! Types
 type Value = {
@@ -23,6 +24,10 @@ const useForm = () => {
     return { onChange, defaultValue };
   };
 
+  const unregister = (id: string) => {
+    unset(formValues, id);
+  };
+
   const onSubmit = (
     e: React.FormEvent<HTMLFormElement>,
     callback: (data: FormValues) => void
@@ -31,7 +36,7 @@ const useForm = () => {
     callback(formValues);
   };
 
-  return { onSubmit, register };
+  return { onSubmit, register, unregister };
 };
 
 export default useForm;
