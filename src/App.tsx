@@ -5,9 +5,14 @@ export default function App() {
 
   console.log("rerender");
 
+  const handleSubmit = (data: any) => {
+    console.log(data);
+  };
+
   return (
-    <form onSubmit={onSubmit}>
-      <input type="text" {...register("test")} />
+    <form onSubmit={(e) => onSubmit(e, handleSubmit)}>
+      <input type="text" {...register("test1")} />
+      <input type="text" {...register("test2")} />
       <button type="submit">Submit</button>
     </form>
   );
