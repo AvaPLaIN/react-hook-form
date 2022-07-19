@@ -1,5 +1,14 @@
-function App() {
-  return <div>a</div>;
-}
+import useForm from "hooks/useForm";
 
-export default App;
+export default function App() {
+  const { onSubmit, register } = useForm();
+
+  console.log("rerender");
+
+  return (
+    <form onSubmit={onSubmit}>
+      <input type="text" {...register("test")} />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
