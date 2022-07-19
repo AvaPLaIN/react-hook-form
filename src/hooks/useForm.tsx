@@ -13,14 +13,14 @@ type FormValues = {
 const useForm = () => {
   const formValues: FormValues = {};
 
-  const register = (id: string) => {
-    set(formValues, id, { value: "" });
+  const register = (id: string, defaultValue?: string) => {
+    set(formValues, id, { value: defaultValue || "" });
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       set(formValues, id, { value: e.currentTarget.value });
     };
 
-    return { onChange };
+    return { onChange, defaultValue };
   };
 
   const onSubmit = (

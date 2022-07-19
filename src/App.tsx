@@ -11,7 +11,7 @@ export default function App() {
 
   return (
     <form onSubmit={(e) => onSubmit(e, handleSubmit)}>
-      <input type="text" {...register("test1")} />
+      <input type="text" {...register("test1", "default value here")} />
       <input type="text" {...register("test2")} />
       <button type="submit">Submit</button>
     </form>
