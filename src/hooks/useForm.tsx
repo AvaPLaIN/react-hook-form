@@ -1,7 +1,7 @@
-import set from "lodash/set";
 import unset from "lodash/unset";
 import { useRef } from "react";
 import getEventValue from "utils/getEventValue";
+import getUpdatedValues from "utils/getUpdatedValues";
 
 //! Types
 type Value = {
@@ -15,13 +15,7 @@ type FormValues = {
 //! Hook
 const useForm = () => {
   const values = useRef({});
-  const firstRun = useRef({});
-
-  const handleSetValues = (id: string, object: any) => {
-    const currentValues = structuredClone(values.current);
-    set(currentValues, id, object);
-    return currentValues;
-  };
+  const registeredControls = useRef({});
 
   const handleUnsetValues = (id: string) => {
     const currentValues = structuredClone(values.current);
@@ -30,23 +24,31 @@ const useForm = () => {
   };
 
   const handleFirstRegister = (id: string) => {
-    firstRun.current = handleSetValues(id, { value: true });
+    registeredControls.current = getUpdatedValues(
+      registeredControls.current,
+      id,
+      { value: true }
+    );
   };
 
   const hasRegistered = (id: string) => {
-    const currentValues = structuredClone(firstRun.current);
+    const currentValues = structuredClone(registeredControls.current);
     return !!currentValues[id]?.value;
   };
 
   const register = (id: string, defaultValue?: string) => {
     if (!hasRegistered(id)) {
       handleFirstRegister(id);
-      values.current = handleSetValues(id, { value: defaultValue || "" });
+      values.current = getUpdatedValues(values.current, id, {
+        value: defaultValue || "",
+      });
     }
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = getEventValue(event);
-      values.current = handleSetValues(id, { value });
+      values.current = getUpdatedValues(values.current, id, {
+        value,
+      });
     };
 
     return { onChange, defaultValue };
