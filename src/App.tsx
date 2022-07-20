@@ -14,6 +14,8 @@ export default function App() {
     setFormData(data);
   };
 
+  console.log("rerender");
+
   return (
     <form onSubmit={handleOnSubmit}>
       <button type="button" onClick={() => handleUnregisterInput("test1")}>
